@@ -1,0 +1,70 @@
+---
+// const people = await Astro.glob('../content/people/*.md')
+// const matches = import.meta.glob('../content/people/*.md', { eager: true });
+// const people = Object.values(matches);
+
+import { getCollection } from "astro:content";
+
+const people = await getCollection('people')
+console.log(people)
+
+---
+
+<h2>People</h2>
+<div class="container">
+    {
+        people.map((person) => (
+            <article>
+                <p class="person">{person.data.name}</p>
+               <p>{person.body}</p>
+                {/* <p>{person.frontmatter.company}</p>
+                <p>{person.frontmatter.year}</p>
+                <p>{person.frontmatter.role}</p> 
+        
+             <p set:html={person.compiledContent()}/> */}
+        
+            </article>
+        )
+        )
+        }
+
+</div>
+
+
+    
+<style lang="scss">
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+article {
+    background-color: rgb(0 0 0/.3);
+    padding: 1rem 2rem;
+    margin-right: 2rem;
+    border-radius: 20px;
+}
+
+.person {
+    background-color: goldenrod;
+    padding: 2rem 1rem;
+    &:hover {
+        background-color: blue;
+    }
+}
+
+@media (min-width: 900px) {
+    .container {
+        width: 100%;
+        background-color: orange;
+        flex-direction: row;
+    }
+}
+
+
+
+
+</style>
